@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:admin123@localhost:27017/chatApplicationDb?authSource=admin
+      host: localhost
+      port: 27017
+      database: chatApplicationDb
+      username: admin
+      password: admin123

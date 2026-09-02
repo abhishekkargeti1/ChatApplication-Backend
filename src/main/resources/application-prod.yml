@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: ${DB_URL}
+      host: localhost
+      port: 27017
+      database: chatApplicationDb
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
