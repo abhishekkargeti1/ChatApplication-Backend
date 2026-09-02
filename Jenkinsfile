@@ -6,6 +6,7 @@ pipeline{
         IMAGE_NAME = "abhishekkargeti/chatapp-backend-image"
         NAMESPACE  = "production-namespace"
         DEPLOYMENT = "chatapp-backend-deployment"
+        DEPLOYMENT_NAME = "chat-app-deployment"
         CONTAINER  = "chat-app-server"
     }
     stages{
@@ -24,7 +25,11 @@ pipeline{
         stage("Building-Docker-Image"){
             steps{
                 sh 'echo "Docker Image Building"'
-                sh 'docker build -t ${IMAGE_NAME}:latest .'
+                sh """
+                    docker build \
+                    -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+                    .
+                """
             }
         }
         stage("Testing"){
@@ -43,8 +48,9 @@ pipeline{
             )
                 ]){
                     sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
-                    sh 'docker image tag ${IMAGE_NAME}:latest  abhishekkargeti/chatapp-backend-image:latest'
-                    sh 'docker push abhishekkargeti/chatapp-backend-image:latest '
+                     sh """
+                        docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                    """
                     sh 'echo "Image Push Successfully"'
                 }
             }
@@ -52,7 +58,17 @@ pipeline{
         stage("Deployment"){
             steps{
                 sh 'echo "Code Deployment"'
-                sh 'kubectl apply -f  /home/ubuntu/kubernetes/chat-application-backend/${DEPLOYMENT}.yml '
+                sh """
+                    kubectl apply \
+                    -f /home/ubuntu/kubernetes/chat-application-backend/${DEPLOYMENT}.yml
+
+                    kubectl set image deployment/${DEPLOYMENT_NAME} \
+                    ${CONTAINER}=${IMAGE_NAME}:${BUILD_NUMBER} \
+                    -n ${NAMESPACE}
+
+                    kubectl rollout status deployment/${DEPLOYMENT_NAME} \
+                    -n ${NAMESPACE}
+                """
                 
         }
     }

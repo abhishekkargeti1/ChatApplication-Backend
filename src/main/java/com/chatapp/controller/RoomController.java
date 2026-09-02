@@ -20,7 +20,7 @@ import com.chatapp.services.RoomService;
 
 @RestController
 @RequestMapping("/api/rooms")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("*")
 public class RoomController {
 
 	@Autowired
