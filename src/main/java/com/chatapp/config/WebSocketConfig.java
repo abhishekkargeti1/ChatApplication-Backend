@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	// /chat endpoint par connection establish hoga
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.addEndpoint("/chat").setAllowedOriginPatterns("http://localhost:5173")
+		registry.addEndpoint("/chat").setAllowedOriginPatterns("*")
 		.withSockJS();// url For Connection Establishment
 
 	}
