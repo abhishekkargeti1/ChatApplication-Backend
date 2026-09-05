@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: chat-app-deployment
-  namespace: production-namespace
+  namespace: chat-app
 spec:
   replicas: 3
   selector:
