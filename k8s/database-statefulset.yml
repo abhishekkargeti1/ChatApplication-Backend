@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongo
-  namespace: production-namespace
+  namespace: chat-app
   labels:
     app: mongo
 spec:
