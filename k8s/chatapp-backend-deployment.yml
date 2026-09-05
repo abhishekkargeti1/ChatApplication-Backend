@@ -1,0 +1,38 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: chat-app-deployment
+  namespace: production-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chat-app-server
+
+  template:
+    metadata:
+      name: chat-app
+      labels:
+        app: chat-app-server
+    spec:
+      containers:
+        - name: chat-app-server
+          image: abhishekkargeti/chatapp-backend-image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: "mongodb://admin:admin123@mongodbcontainer:27017/chatApplicationDb?authSource=admin"
+            - name: DB_USERNAME
+              value: "admin"
+              #valueFrom:
+                #secretKeyRef:
+                 # name: secret-config-file
+                  #key: MONGODB_USERNAME
+            - name: DB_PASSWORD
+              value: "admin123"
+              #valueFrom:
+               # secretKeyRef:
+                #  name: secret-config-file
+                 # key: MONGODB_PASSWORD
+
