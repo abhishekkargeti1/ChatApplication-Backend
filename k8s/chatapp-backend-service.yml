@@ -8,6 +8,6 @@ spec:
   selector:
     app: chat-app-server
   ports:
-    - port: 8080
+    - port: 8083
       targetPort: 8080
 
