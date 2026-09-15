@@ -19,7 +19,7 @@ import com.chatapp.entities.Room;
 import com.chatapp.services.RoomService;
 
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping("/chatapi/rooms")
 @CrossOrigin("*")
 public class RoomController {
 
